@@ -10,6 +10,8 @@
 body {
     height: 100vh;
     background: #212529;
+    /* Smooth scrolling for anchor links */
+    scroll-behavior: smooth;
 }
 
 .navbar {
@@ -18,11 +20,21 @@ body {
     justify-content: space-between;
     height: 80px;
     padding: 0 50px;
+    /* Subtle shadow for depth */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* Transition for background if it changes */
+    transition: background-color 0.3s ease;
 }
 
 .navbar h2 {
     color: rgb(1, 192, 255);
     font-weight: 600;
+    /* Add a slight scale on hover */
+    transition: transform 0.3s ease;
+}
+
+.navbar h2:hover {
+    transform: scale(1.05);
 }
 
 .navbar ul {
@@ -38,11 +50,33 @@ body {
     color: #fff;
     font-size: 16px;
     margin-right: 25px;
-    transition: color 0.3s ease;
+    /* Existing transition, but adding a subtle lift */
+    transition: color 0.3s ease, transform 0.3s ease;
+    position: relative; /* Needed for positioning the ::after pseudo-element */
+    padding-bottom: 5px; /* Add some space for the underline */
+}
+
+/* Style for the animated underline */
+.navbar ul li a::after {
+    content: '';
+    position: absolute;
+    left: 50%; /* Start in the middle */
+    bottom: 0; /* Position below the text */
+    width: 0; /* Start with no width */
+    height: 2px; /* Thickness of the underline */
+    background-color: rgb(1, 192, 255); /* Color of the underline */
+    transition: all 0.3s ease-out; /* Smooth transition for width and transform */
+    transform: translateX(-50%); /* Center the underline */
 }
 
 .navbar ul li:hover a {
     color: rgb(1, 192, 255);
+    transform: translateY(-3px); /* Lift effect on hover */
+}
+
+/* On hover, expand the underline */
+.navbar ul li:hover a::after {
+    width: 100%; /* Expand to full width */
 }
 
 .navbar ul li:last-child a {
@@ -51,16 +85,19 @@ body {
 
 .hire-btn {
     background: rgb(1, 192, 255);
-    padding: 6px 30px;
+    padding: 10px 30px; /* Slightly more padding for a better feel */
     border: none;
     font-size: 16px;
     cursor: pointer;
     border-radius: 6px;
-    transition: background-color 0.3s ease;
+    /* Smoother transition for background and subtle scale */
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .hire-btn:hover {
     background: rgb(2, 116, 154);
+    transform: translateY(-3px); /* Lift effect */
+    box-shadow: 0 5px 15px rgba(1, 192, 255, 0.4); /* Subtle shadow on hover */
 }
 
 .main {
@@ -69,12 +106,15 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center; /* Center text for better presentation */
 }
 
 .main h4 {
     font-size: 32px;
     color: #fff;
     font-weight: 600;
+    /* Fade in animation */
+    animation: fadeInDown 1s ease-out;
 }
 
 .main h4 span {
@@ -87,12 +127,18 @@ body {
     font-weight: 600;
     color: #fff;
     margin-top: 8px;
+    /* Fade in from left */
+    animation: fadeInLeft 1s ease-out 0.3s forwards; /* Added forwards to keep the end state */
+    opacity: 0; /* Start hidden */
 }
 
 .main p.subtitle {
     font-size: 16px;
     color: #ccc;
     margin-top: 20px;
+    /* Fade in from right */
+    animation: fadeInRight 1s ease-out 0.6s forwards; /* Added forwards to keep the end state */
+    opacity: 0; /* Start hidden */
 }
 
 .main img {
@@ -100,6 +146,11 @@ body {
     border-radius: 50%;
     height: 200px;
     margin-top: 100px;
+    object-fit: cover; /* Ensures image fills the circle nicely */
+    border: 5px solid rgb(1, 192, 255); /* Add a subtle border */
+    /* Pop-in and subtle float animation */
+    animation: zoomIn 1s ease-out 0.9s forwards, float 3s ease-in-out infinite;
+    opacity: 0; /* Start hidden */
 }
 
 .guarantee {
@@ -121,11 +172,24 @@ body {
     padding: 0 30px;
     border: 1px solid transparent;
     cursor: pointer;
+    /* Smooth transition for all properties */
     transition: all 0.3s ease;
+    /* Initial state for staggered animation */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease-out forwards;
 }
+
+/* Staggered animation for guarantee items */
+.guarantee .item:nth-child(1) { animation-delay: 1.2s; }
+.guarantee .item:nth-child(2) { animation-delay: 1.4s; }
+.guarantee .item:nth-child(3) { animation-delay: 1.6s; }
+
 
 .guarantee .item:hover {
     border-color: rgb(1, 192, 255);
+    transform: translateY(-5px) scale(1.02); /* Lift and slight scale on hover */
+    box-shadow: 0 8px 20px rgba(1, 192, 255, 0.3); /* Enhanced shadow on hover */
 }
 
 .guarantee .item .icon {
@@ -136,15 +200,23 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s ease;
+    /* Smooth transition for background and scale */
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .guarantee .item:hover .icon {
     background-color: rgb(1, 192, 255);
+    transform: scale(1.1); /* Pop effect on icon hover */
 }
 
 .guarantee .item .icon i {
     font-size: 30px;
+    color: #212529; /* Ensure icon color contrasts when background changes */
+    transition: color 0.3s ease;
+}
+
+.guarantee .item:hover .icon i {
+    color: #fff; /* Change icon color when background changes */
 }
 
 .guarantee .item .info {
@@ -167,11 +239,13 @@ body {
 .guarantee .item > i {
     color: #fff;
     font-size: 30px;
-    transition: color 0.3s ease;
+    /* Transition for color and subtle rotation */
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .guarantee .item:hover > i {
     color: rgb(1, 192, 255);
+    transform: translateX(5px) rotate(5deg); /* Slight movement and rotation */
 }
 
 .seprator {
@@ -181,6 +255,9 @@ body {
     display: inline-block;
     color: rgb(1, 192, 255);
     border-radius: 12px;
+    /* REMOVED: opacity and transform for on-scroll reveal */
+    /* Kept for consistency if you decide to add JS later for other elements */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 .about {
@@ -189,10 +266,21 @@ body {
     align-items: center;
     gap: 80px;
     padding: 0 50px;
+    /* REMOVED: opacity and transform for on-scroll reveal */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
 .about img {
-    width: 280px;
+    width: 200px; /* Adjust width and height to your desired circular size */
+    height: 200px;
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image covers the circle without distortion */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Add a deeper shadow */
+    transition: transform 0.4s ease;
+}
+
+.about img:hover {
+    transform: scale(1.03); /* Slight zoom on hover */
 }
 
 .about .info h3 {
@@ -205,6 +293,7 @@ body {
 .about .info p {
     color: #ccc;
     font-size: 14px;
+    line-height: 1.6; /* Improve readability */
 }
 
 .about .info button {
@@ -215,6 +304,8 @@ body {
     display: flex;
     justify-content: space-around;
     padding: 0 50px;
+    /* REMOVED: opacity and transform for on-scroll reveal */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
 .skills .left {
@@ -230,6 +321,7 @@ body {
 .skills .left .info p {
     color: #ccc;
     font-size: 14px;
+    line-height: 1.6;
 }
 
 .skills .left button {
@@ -251,14 +343,30 @@ body {
     align-items: center;
     justify-content: center;
     background: #383e45;
-    width: 50px;
-    height: 50px;
+    width: 60px; /* Slightly larger for better icon visibility */
+    height: 60px; /* Slightly larger for better icon visibility */
     border-radius: 10px;
+    /* Smooth transition for transform and background */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
 }
 
-.skills .right .item i {
-    font-size: 34px;
+.skills .right .item:hover {
+    transform: translateY(-5px) scale(1.1); /* Lift and scale on hover */
+    background-color: rgb(1, 192, 255); /* Change background on hover */
+    box-shadow: 0 8px 20px rgba(1, 192, 255, 0.4); /* Enhanced shadow on hover */
+}
+
+.skills .right .item i,
+.skills .right .item img { /* Apply styles to img as well */
+    font-size: 38px; /* Slightly larger icons */
     color: #fff;
+    transition: color 0.3s ease;
+}
+
+.skills .right .item:hover i,
+.skills .right .item:hover img {
+    color: #212529; /* Change icon color on hover */
 }
 
 footer {
@@ -277,11 +385,15 @@ footer .start {
     width: 70%;
     margin: -80px auto 50px;
     position: relative;
+    /* Subtle pop-up animation */
+    animation: slideInUp 0.8s ease-out forwards;
+    opacity: 0;
 }
 
 footer .start p {
     font-size: 13px;
     width: 35%;
+    color: #212529; /* Make text readable on the blue background */
 }
 
 footer .start button {
@@ -296,6 +408,7 @@ footer .start button {
 footer .start button:hover {
     background-color: #fff;
     border-color: #fff;
+    color: rgb(1, 192, 255); /* Change text color on hover */
 }
 
 footer .cols {
@@ -333,11 +446,12 @@ footer .cols .links-col a {
     color: #7b7b7b;
     font-size: 14px;
     line-height: 26px;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.2s ease; /* Add transform for lift */
 }
 
 footer .cols .links-col a:hover {
     color: rgb(1, 192, 255);
+    transform: translateX(5px); /* Slide effect on hover */
 }
 
 footer .cols .news-col p {
@@ -359,6 +473,13 @@ footer .cols .news-col form input {
     border-radius: 100px;
     font-weight: 400;
     font-size: 13px;
+    color: #fff; /* Ensure input text is visible */
+    outline: none; /* Remove default outline */
+    transition: border 0.3s ease; /* Smooth transition for border */
+}
+
+footer .cols .news-col form input:focus {
+    border: 1px solid rgb(1, 192, 255); /* Highlight on focus */
 }
 
 footer .cols .news-col form button {
@@ -374,17 +495,99 @@ footer .cols .news-col form button {
     top: 0;
     right: 0;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 footer .cols .news-col form button:hover {
     background-color: rgb(2, 116, 154);
+    transform: scale(1.1); /* Pop effect on button hover */
 }
 
 footer .cols .news-col form button i {
     font-size: 26px;
+    color: #212529; /* Ensure icon color contrasts */
 }
 
+/* Keyframe Animations */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Media Queries (adjusted slightly to accommodate new animations) */
 @media screen and (max-width: 1100px) {
     .guarantee {
         flex-wrap: wrap;
@@ -418,7 +621,8 @@ footer .cols .news-col form button i {
 
     footer .start {
         width: 90%;
-        left: 5%;
+        left: 0; /* Remove fixed left as margin auto handles centering */
+        transform: translateX(0); /* Reset transform for media query */
         top: -20%;
     }
 
@@ -459,6 +663,7 @@ footer .cols .news-col form button i {
 @media screen and (max-width: 650px) {
     .navbar {
         justify-content: center;
+        padding: 0 20px; /* Adjust padding for smaller screens */
     }
 
     .navbar h2 {
@@ -467,12 +672,14 @@ footer .cols .news-col form button i {
 
     .navbar ul li a {
         font-size: 14px;
+        margin-right: 15px; /* Adjust spacing */
     }
 
     .main {
         margin-top: 50px;
         height: 320px;
         justify-content: start;
+        padding: 0 20px; /* Add padding to main section */
     }
 
     .main h4 {
@@ -496,28 +703,62 @@ footer .cols .news-col form button i {
     .skills {
         flex-wrap: wrap;
         justify-content: center;
+        padding: 0 20px; /* Adjust padding for skills section */
     }
 
     .skills .right {
-        justify-content: space-between;
+        justify-content: space-around; /* Distribute items more evenly */
+        width: 100%; /* Take full width */
+        margin-top: 30px; /* Add some space from left section */
     }
 
     .skills .left .info h3 {
         font-size: 20px;
+        text-align: center; /* Center align text for better mobile view */
+    }
+
+    .skills .left .info p {
+        text-align: center; /* Center align text */
+    }
+
+    .skills .left button {
+        display: block; /* Make button block level */
+        margin: 30px auto 0; /* Center button */
     }
 
     footer .start {
         top: -8%;
+        width: 90%;
+        margin: -80px auto 30px; /* Adjust margin */
+        flex-direction: column; /* Stack elements vertically */
+        text-align: center;
+        padding: 20px;
+    }
+
+    footer .start h3 {
+        margin-bottom: 10px;
     }
 
     footer .start p {
-        display: none;
+        display: none; /* Hide paragraph for very small screens */
+    }
+    footer .start button {
+        margin-top: 15px;
     }
 
     footer .cols .about-col,
     footer .cols .links-col,
     footer .cols .news-col {
         flex-basis: 100%;
+        text-align: center; /* Center content in footer columns */
+    }
+    footer .cols .links-col a {
+        display: inline-block; /* Make links inline-block for centering */
+        margin: 0 10px; /* Add horizontal spacing */
+    }
+    footer .cols .news-col form {
+        width: 80%; /* Adjust form width */
+        margin: 20px auto; /* Center form */
     }
 }
 
@@ -536,5 +777,13 @@ footer .cols .news-col form button i {
 
     .guarantee .item .info p {
         font-size: 12px;
+    }
+    .skills .right .item {
+        width: 50px;
+        height: 50px;
+    }
+    .skills .right .item i,
+    .skills .right .item img {
+        font-size: 30px;
     }
 }
